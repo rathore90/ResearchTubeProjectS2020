@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ResearchTube.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace ResearchTube.Areas.Identity.Pages.Account
 {
@@ -42,10 +44,12 @@ namespace ResearchTube.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email", Prompt = "example@example.com")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Password", Prompt = "Password")]
             public string Password { get; set; }
 
             [Display(Name = "Remember me?")]
@@ -72,7 +76,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
+            
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout

@@ -20,8 +20,12 @@ namespace ResearchTube.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("ResearchTubeDbContextConnection")));
 
-                services.AddDefaultIdentity<ResearchTubeUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ResearchTubeDbContext>();
+                services.AddDefaultIdentity<ResearchTubeUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                })
+                    .AddEntityFrameworkStores<ResearchTubeDbContext>()
+                    .AddDefaultTokenProviders();
             });
         }
     }

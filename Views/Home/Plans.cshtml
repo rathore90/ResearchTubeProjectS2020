@@ -1,0 +1,80 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ResearchTubeUser> SignInManager
+@inject UserManager<ResearchTubeUser> UserManager
+
+@{
+    ViewData["Title"] = "Plan Page";
+}
+<!--  BOOTSTRAP BLUE = #0275d8  -->
+<!--  COMPLIMENTARY TO ABOVE = #d85002-->
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+ <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ResearchTube Plan Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/plans.css" />
+</head>
+<body>
+    <div class="centeredText">
+        <div class="columns">
+            <ul class="price">
+                <li class="header">Free</li>
+                <li class="grey">$ 0.00 / month</li>
+                <li><span style="color: green">✓</span> Feature 1</li>
+                <li><span style="color: red">X</span> Feature 2</li>
+                <li><span style="color: red">X</span> Feature 3</li>
+                
+                @if (SignInManager.IsSignedIn(User)){
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li> //If already signed in, take them to payment page instead. In future will do validation to see if they've already have a premium account with us
+                }else{
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
+                }
+
+
+            </ul>
+        </div>
+        <div class="columns">
+            <ul class="price">
+                <li class="header" style="background-color:#0275d8">Basic</li>
+                <li class="grey">$ 9.99 / month</li>
+                <li><span style="color: green">✓</span> Feature 1</li>
+                <li><span style="color: green">✓</span> Feature 2</li>
+                <li><span style="color: red">X</span> Feature 3</li>
+                
+                @if (SignInManager.IsSignedIn(User)){
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li>
+                }else{
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
+                }
+            </ul>
+        </div>
+
+        <div class="columns">
+            <ul class="price">
+                <li class="header">Pro</li>
+                <li class="grey">$ 19.99 / month</li>
+                <li><span style="color: green">✓</span> Feature 1</li>
+                <li><span style="color: green">✓</span> Feature 2</li>
+                <li><span style="color: green">✓</span> Feature 3</li>
+                
+                @if (SignInManager.IsSignedIn(User)){
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li>
+                }else{
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+

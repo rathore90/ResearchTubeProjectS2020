@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResearchTube.Areas.Identity.Data;
-
+using Microsoft.AspNetCore.Authentication.Facebook;
 namespace ResearchTube
 {
     public class Startup
@@ -30,6 +30,12 @@ namespace ResearchTube
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddAuthentication()
+                .AddFacebook(options =>
+                {
+                    options.AppId = "876955309474024";
+                    options.AppSecret = "af18667feac5ffb21741b75e699b30fe";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

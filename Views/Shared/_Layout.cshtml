@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ResearchTube</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -23,26 +23,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Plans">Plans</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Home" asp-action="AboutUs" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            About Us
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item">Company Description</a>
-                            <a class="dropdown-item">Demo Video</a>
-                            <a class="dropdown-item">Feedback</a>
-                            <a class="dropdown-item">About The Owners</a>
-                            <a class="dropdown-item">ResearchTube Team</a>
-                        </div>
-                    </li>
                         <form class="form-inline my-1 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" asp-area="" asp-controller="Home" asp-action="Index">Create Video</button>
@@ -59,12 +44,9 @@
         </main>
     </div>
 
-    <footer class="border-top bg-dark footer text-muted">
-         <div class="container">
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> | 
-                    <a asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a> | 
-                    <a asp-area="" asp-controller="Home" asp-action="UnderConstruction">Contact Us</a>
-            &copy; 2019 - 2020 - ResearchTube, Inc
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - ResearchTube - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

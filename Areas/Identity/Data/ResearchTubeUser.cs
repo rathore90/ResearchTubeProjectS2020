@@ -25,5 +25,25 @@ namespace ResearchTube.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Interest { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string University { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Country { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Province { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Address { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Postcode { get; set; }
     }
 }

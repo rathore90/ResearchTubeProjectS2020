@@ -13,16 +13,36 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="/css/carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/index.css" />
-
+    <link rel="stylesheet" href="~/css/videoPage.css"/>
 </head>
 
 <body>
     @if (SignInManager.IsSignedIn(User))
     {
         //Here will go new Home Page (Signed IN)
-        <h1>Signed In</h1>
-        <h2>Recommended for @user.FirstName</h2>
+       
+    <div>
+        <ul id="menu">
+            <li class="category">
+                <a href="#">category1</a>
+            </li>
+            <li class="category">
+                <a href="#">category2</a>
+            </li>
+            <li class="category">
+                <a href="#">category3</a>
+            </li>
+            <li class="category">
+                <a href="#">category4</a>
+            </li>
+        </ul>
+    </div>
 
+     <h2>Recommended for @user.FirstName</h2>
+
+    <div id="left"></div>
+    <div id="right"></div>
+    <script src = "~/js/videoPage.js"></script>
     }
     else
     {

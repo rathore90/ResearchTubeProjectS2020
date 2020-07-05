@@ -56,7 +56,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Interest", Prompt = "Interest")]
             public string Interest { get; set; }
 
-            [Required]
+           /* [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Country", Prompt = "Country")]
             public string Country{ get; set; }
@@ -78,7 +78,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "University", Prompt = "University")]
-            public string University { get; set; }
+            public string University { get; set; }*/
 
         }
 
@@ -95,12 +95,12 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Interest = user.Interest,
-                Position = user.Position,
-                Country = user.Country,
+                Position = user.Position
+              /*  Country = user.Country,
                 Province = user.Province,
                 Address = user.Address,
                 Postcode = user.Postcode,
-                University = user.University
+                University = user.University*/
             };
         }
 
@@ -161,7 +161,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 user.Position = Input.Position;
             }
 
-            if (Input.Country != user.Country)
+           /* if (Input.Country != user.Country)
             {
                 user.Country = Input.Country;
             }
@@ -184,7 +184,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             if (Input.University != user.University)
             {
                 user.University = Input.University;
-            }
+            }*/
 
             await _userManager.UpdateAsync(user);
 

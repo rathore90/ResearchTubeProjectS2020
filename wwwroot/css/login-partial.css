@@ -2,8 +2,9 @@
 }
 
 #user-button {
-    border-radius: 50%;
-    border: 2px solid white;
-    padding-left: 8px;
-    padding-right: 8px;
+  border-radius: 50%;
+  border: 2px solid white;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: inline-flex;
 }

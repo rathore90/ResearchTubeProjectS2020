@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResearchTube.Data;
 
 namespace ResearchTube.Migrations
 {
     [DbContext(typeof(ResearchTubeDbContext))]
-    partial class ResearchTubeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200708064554_Added_UploadImage")]
+    partial class Added_UploadImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

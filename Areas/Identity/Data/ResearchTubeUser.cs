@@ -25,5 +25,9 @@ namespace ResearchTube.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Interest { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(max)")]
+        public string UploadImage { get; set; }
     }
 }

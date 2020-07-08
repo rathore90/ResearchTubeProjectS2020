@@ -41,9 +41,5 @@ namespace ResearchTube.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Address { get; set; }
-
-        [PersonalData]
-        [Column(TypeName = "nvarchar(100)")]
-        public string Postcode { get; set; }
     }
 }

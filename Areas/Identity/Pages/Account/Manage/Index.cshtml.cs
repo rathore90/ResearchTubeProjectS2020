@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -56,29 +57,29 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Interest", Prompt = "Interest")]
             public string Interest { get; set; }
 
-           /* [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Country", Prompt = "Country")]
-            public string Country{ get; set; }
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Province", Prompt = "Province")]
-            public string Province { get; set; }
+            /* [Required]
+             [DataType(DataType.Text)]
+             [Display(Name = "Country", Prompt = "Country")]
+             public string Country{ get; set; }
+             [Required]
+             [DataType(DataType.Text)]
+             [Display(Name = "Province", Prompt = "Province")]
+             public string Province { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Address", Prompt = "Address")]
-            public string Address{ get; set; }
+             [Required]
+             [DataType(DataType.Text)]
+             [Display(Name = "Address", Prompt = "Address")]
+             public string Address{ get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "Postcode", Prompt = "Postcode")]
-            public string Postcode { get; set; }
+             [Required]
+             [DataType(DataType.Text)]
+             [Display(Name = "Postcode", Prompt = "Postcode")]
+             public string Postcode { get; set; }
 
-            [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "University", Prompt = "University")]
-            public string University { get; set; }*/
+             [Required]
+             [DataType(DataType.Text)]
+             [Display(Name = "University", Prompt = "University")]
+             public string University { get; set; }*/
 
         }
 
@@ -102,7 +103,10 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 Postcode = user.Postcode,
                 University = user.University*/
             };
+
+            
         }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -192,5 +196,6 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
     }
 }

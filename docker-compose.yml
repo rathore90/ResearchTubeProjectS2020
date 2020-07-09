@@ -8,6 +8,8 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
         ports:
             - '8080:80'
+        extra_hosts:
+            - 'localhost:192.168.65.2'
         depends_on:
             - db
     db:        

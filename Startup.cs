@@ -30,6 +30,9 @@ namespace ResearchTube
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<ResearchTubeDbContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("ResearchTubeDbContextConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

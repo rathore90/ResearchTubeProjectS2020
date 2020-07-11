@@ -130,7 +130,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
                     //Upload Image
                     String imgText = Path.GetExtension(fileobj.FileName);
-                    if (imgText == ".jpg" || imgText == ".jpeg")
+                    if (imgText == ".jpg" || imgText == ".jpeg" || imgText == ".png")
                     {
                         var uploading = Path.Combine(_iweb.WebRootPath, "Images", fileobj.FileName);
                         var stream = new FileStream(uploading, FileMode.Create);

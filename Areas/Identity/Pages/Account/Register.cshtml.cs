@@ -102,19 +102,19 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu,string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            
-            
+
+
             if (ModelState.IsValid)
             {
-                var user = new ResearchTubeUser 
-                { 
-                    UserName = Input.Email, 
-                    Email = Input.Email, 
-                    FirstName = Input.FirstName, 
+                var user = new ResearchTubeUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Position = Input.Position,
                     Interest = Input.Interest,
@@ -130,7 +130,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
                     //Upload Image
                     String imgText = Path.GetExtension(fileobj.FileName);
-                    if(imgText == ".jpg" || imgText == ".gif")
+                    if (imgText == ".jpg" || imgText == ".jpeg")
                     {
                         var uploading = Path.Combine(_iweb.WebRootPath, "Images", fileobj.FileName);
                         var stream = new FileStream(uploading, FileMode.Create);
@@ -140,7 +140,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                         user.UploadImage = uploading;
                         await _db_context.SaveChangesAsync();
                     }
-                   
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

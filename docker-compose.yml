@@ -5,6 +5,8 @@ services:
         image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
             - "1433:1433"
+        volumes:
+            - 'C:\DockerVolumes:/var/opt/mssql/data' 
         environment: 
             SA_PASSWORD: "researchTube123!"
             ACCEPT_EULA: "Y"

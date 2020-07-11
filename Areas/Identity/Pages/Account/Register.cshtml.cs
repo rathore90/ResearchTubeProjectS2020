@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ResearchTube.Areas.Identity.Data;
+using ResearchTube.Data;
 
 namespace ResearchTube.Areas.Identity.Pages.Account
 {
@@ -24,17 +29,23 @@ namespace ResearchTube.Areas.Identity.Pages.Account
         private readonly UserManager<ResearchTubeUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _iweb;
+        private readonly ResearchTubeDbContext _db_context;
 
         public RegisterModel(
             UserManager<ResearchTubeUser> userManager,
             SignInManager<ResearchTubeUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IWebHostEnvironment iweb,
+            ResearchTubeDbContext db_context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _iweb = iweb;
+            _db_context = db_context;
         }
 
         [BindProperty]
@@ -79,6 +90,10 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Interest", Prompt = "Interest")]
             public string Interest { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Upload Image", Prompt = "Profile Image")]
+            public string UploadImage { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,20 +102,23 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+
             if (ModelState.IsValid)
             {
-                var user = new ResearchTubeUser 
-                { 
-                    UserName = Input.Email, 
-                    Email = Input.Email, 
-                    FirstName = Input.FirstName, 
+                var user = new ResearchTubeUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     Position = Input.Position,
-                    Interest = Input.Interest
+                    Interest = Input.Interest,
+                    UploadImage = Input.UploadImage
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -109,7 +127,20 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                     //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                     //_logger.Log(LogLevel.Warning, confirmationLink);
-                   
+
+                    //Upload Image
+                    String imgText = Path.GetExtension(fileobj.FileName);
+                    if (imgText == ".jpg" || imgText == ".jpeg")
+                    {
+                        var uploading = Path.Combine(_iweb.WebRootPath, "Images", fileobj.FileName);
+                        var stream = new FileStream(uploading, FileMode.Create);
+                        await fileobj.CopyToAsync(stream);
+
+                        //Store in database
+                        user.UploadImage = uploading;
+                        await _db_context.SaveChangesAsync();
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

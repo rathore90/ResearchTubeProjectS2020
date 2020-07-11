@@ -51,40 +51,103 @@ namespace ResearchTube.Controllers
         }
 
         [HttpPost("create-customer")]
-
-        public async Task<ActionResult<Subscription>> CreateCustomerAsync([FromBody] CustomerCreateRequest request)
+        public ActionResult<CreateCustomerResponse> CreateCustomer([FromBody] CustomerCreateRequest req)
         {
-            var customerService = new CustomerService(this.client);
-
-            var customer = await customerService.CreateAsync(new CustomerCreateOptions
+            var options = new CustomerCreateOptions
             {
-                Email = request.Email,
-                PaymentMethod = request.PaymentMethod,
+                Email = req.Email,
+            };
+            var service = new CustomerService();
+            var customer = service.Create(options);
+
+            var a = new CreateCustomerResponse
+            {
+                Customer = customer,
+            };
+            Console.WriteLine(a);
+            return new CreateCustomerResponse
+            {
+                Customer = customer,
+            };
+        }
+
+        [HttpPost("create-subscription")]
+        public ActionResult<Subscription> CreateSubscription([FromBody] CreateSubscriptionRequest req)
+        {
+            // Attach payment method
+            var options = new PaymentMethodAttachOptions
+            {
+                Customer = req.Customer,
+            };
+            var service = new PaymentMethodService();
+            var paymentMethod = service.Attach(req.PaymentMethod, options);
+
+            // Update customer's default invoice payment method
+            var customerOptions = new CustomerUpdateOptions
+            {
                 InvoiceSettings = new CustomerInvoiceSettingsOptions
                 {
-                    DefaultPaymentMethod = request.PaymentMethod,
-                }
-            });
-
-            var subscriptionService = new SubscriptionService(this.client);
-
-            var subscription = await subscriptionService.CreateAsync(new SubscriptionCreateOptions
-            {
-                Items = new List<SubscriptionItemOptions>
-                {
-                    new SubscriptionItemOptions
-                    {
-                        Price = this.options.Value.SubscriptionPriceId,
-                    },
+                    DefaultPaymentMethod = paymentMethod.Id,
                 },
-                Customer = customer.Id,
-                Expand = new List<string>
-                {
-                    "latest_invoice.payment_intent",
-                }
-            });
-            return subscription;
+            };
+            var customerService = new CustomerService();
+            customerService.Update(req.Customer, customerOptions);
+
+            // Create subscription
+            var subscriptionOptions = new SubscriptionCreateOptions
+            {
+                Customer = req.Customer,
+                Items = new List<SubscriptionItemOptions>
+        {
+            new SubscriptionItemOptions
+            {
+                Price = Environment.GetEnvironmentVariable(req.Price),
+            },
+        },
+            };
+            subscriptionOptions.AddExpand("latest_invoice.payment_intent");
+            var subscriptionService = new SubscriptionService();
+            try
+            {
+                Subscription subscription = subscriptionService.Create(subscriptionOptions);
+                return subscription;
+            }
+            catch (StripeException e)
+            {
+                Console.WriteLine($"Failed to create subscription.{e}");
+                return BadRequest();
+            }
         }
+
+        [HttpPost("retry-invoice")]
+        public ActionResult<Invoice> RetryInvoice([FromBody] RetryInvoiceRequest req)
+        {
+            // Attach payment method
+            var options = new PaymentMethodAttachOptions
+            {
+                Customer = req.Customer,
+            };
+            var service = new PaymentMethodService();
+            var paymentMethod = service.Attach(req.PaymentMethod, options);
+
+            // Update customer's default invoice payment method
+            var customerOptions = new CustomerUpdateOptions
+            {
+                InvoiceSettings = new CustomerInvoiceSettingsOptions
+                {
+                    DefaultPaymentMethod = paymentMethod.Id,
+                },
+            };
+            var customerService = new CustomerService();
+            customerService.Update(req.Customer, customerOptions);
+
+            var invoiceOptions = new InvoiceGetOptions();
+            invoiceOptions.AddExpand("payment_intent");
+            var invoiceService = new InvoiceService();
+            Invoice invoice = invoiceService.Get(req.Invoice, invoiceOptions);
+            return invoice;
+        }
+
 
         [HttpPost("webhook")]
 
@@ -99,7 +162,7 @@ namespace ResearchTube.Controllers
                 _logger.LogInformation(json);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception occured while process webhook event.");
                 return BadRequest();
@@ -113,8 +176,29 @@ namespace ResearchTube.Controllers
         {
             return View();
         }
-        
-       
+        public IActionResult FreePlanPage()
+        {
+            // Set your secret key. Remember to switch to your live secret key in production!
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            StripeConfiguration.ApiKey = "sk_test_51GtSONETdjG0caU1tLawSk3OAdAKzFHNlDZy0HEMUP4pluP8rFlyEM53LLCa2OyM1XioPKGf8klJcWIvtxwoHMih00HlWR2oUx";
+
+            var options = new PaymentIntentCreateOptions
+            {
+                Amount = 1000,
+                Currency = "cad",
+                PaymentMethodTypes = new List<string>
+        {
+            "card",
+        },
+                ReceiptEmail = "jenny.rosen@example.com",
+            };
+
+            var service = new PaymentIntentService();
+            var paymentIntent = service.Create(options);
+
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -36,6 +36,10 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Upload Image", Prompt = "Profile Image")]
+            public string UploadImage { get; set; }
         }
 
         private async Task LoadAsync(ResearchTubeUser user)
@@ -47,7 +51,8 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                UploadImage = user.UploadImage
             };
         }
 

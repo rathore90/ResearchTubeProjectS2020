@@ -130,14 +130,15 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
                     //Upload Image
                     String imgText = Path.GetExtension(fileobj.FileName);
-                    if (imgText == ".jpg" || imgText == ".jpeg" || imgText == ".png")
+                    if (imgText.Equals(".jpg", StringComparison.OrdinalIgnoreCase)|| imgText.Equals(".jpeg", StringComparison.OrdinalIgnoreCase) || imgText.Equals(".png", StringComparison.OrdinalIgnoreCase))
                     {
                         var uploading = Path.Combine(_iweb.WebRootPath, "Images", fileobj.FileName);
                         var stream = new FileStream(uploading, FileMode.Create);
                         await fileobj.CopyToAsync(stream);
 
                         //Store in database
-                        user.UploadImage = uploading;
+                    
+                        user.UploadImage = "~/Images/"+ fileobj.FileName;
                         await _db_context.SaveChangesAsync();
                     }
 

@@ -1,8 +1,8 @@
-var categories = ["AI", "Biology", "Computer Science", "IoT"]; // taken from user interest || I will write all SQL queries neccessary at the bottom of javascript file (1)
-var allCategories = ["Nursing", "Medicine", "Science", "COVID-19"]; // taken from videoTag (2)
+var allCategories = ["AI", "Biology", "Computer Science", "IoT"]; // taken from user interest || I will write all SQL queries neccessary at the bottom of javascript file (1)
+var categories = ["Nursing", "Medicine", "Science", "COVID-19"]; // taken from videoTag (2)
 var buzzwords = ["Trending", "Current Events", "Worldwide", "Featured"];
 
-function leftColumn() {
+function userColumn() {
   var outputHTML = "";
   outputHTML += "<table>";
   for (var i = 0; i < categories.length; i++) {
@@ -12,8 +12,8 @@ function leftColumn() {
     for (var j = 0; j < 4; j++) {
       outputHTML += "<tr>";
       outputHTML +=
-        "<td><img src='/img/sampleImg1.jpeg' asp-append-version='true' height='243px' width='432px'></td>"; //(3)
-      outputHTML +=
+        "<td><img src='/img/sampleImg1.jpeg' asp-append-version='true' height='150px' width='300px'></td>"; //(3)
+          outputHTML +=
         "<td><ul id = 'titleAndDesc'><li class='font-weight-bold'><h3> Title " +
         j +
         "</h3></li>"; //(4)
@@ -30,7 +30,7 @@ function leftColumn() {
   document.getElementById("left").innerHTML = outputHTML;
 }
 
-function rightColumn() {
+function globalColumn() {
   var outputHTML = "";
   outputHTML += "<table>";
   for (var i = 0; i < buzzwords.length; i++) {
@@ -55,8 +55,8 @@ function rightColumn() {
   document.getElementById("right").innerHTML = outputHTML;
 }
 
-leftColumn();
-rightColumn();
+userColumn();
+//globalColumn();
 /*
 
 --------1--------

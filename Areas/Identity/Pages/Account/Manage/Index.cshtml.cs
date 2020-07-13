@@ -36,6 +36,11 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "VideoId", Prompt = "VideoId")]
+            public string Videoid { get; set; }
         }
 
         private async Task LoadAsync(ResearchTubeUser user)
@@ -47,7 +52,8 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Videoid = user.VideoId
             };
         }
 
@@ -87,7 +93,11 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-
+            if (Input.Videoid != user.VideoId)
+            {
+                user.VideoId += Input.Videoid + ',';
+            }
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

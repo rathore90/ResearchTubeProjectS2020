@@ -6,4 +6,15 @@
     border: 2px solid white;
     padding-left: 8px;
     padding-right: 8px;
+    display: inline-block;
 }
+
+.user-profile-dropdown.show {
+    margin-left: -170px;
+    width: 250px;
+}
+
+.user-image{
+    text-align: center;
+}
+

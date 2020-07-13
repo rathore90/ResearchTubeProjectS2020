@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResearchTube.Areas.Identity.Data;
+using ResearchTube.Data;
 
 namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 {
@@ -14,13 +17,16 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ResearchTubeUser> _userManager;
         private readonly SignInManager<ResearchTubeUser> _signInManager;
+        private readonly ResearchTubeDbContext _db_context;
 
         public IndexModel(
             UserManager<ResearchTubeUser> userManager,
-            SignInManager<ResearchTubeUser> signInManager)
+            SignInManager<ResearchTubeUser> signInManager,
+            ResearchTubeDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _db_context = dbContext;
         }
 
         public string Username { get; set; }
@@ -36,6 +42,9 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Upload Image", Prompt = "Profile Image")]
+            public string? UploadImage { get; set; }
         }
 
         private async Task LoadAsync(ResearchTubeUser user)
@@ -47,7 +56,8 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                UploadImage = user.UploadImage
             };
         }
 
@@ -63,7 +73,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu, string? returnUrl = null)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -76,7 +86,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-
+            
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -87,6 +97,17 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (fileobj != null)
+            {
+                String imgText = Path.GetExtension(fileobj.FileName).ToLower();
+                if (imgText == ".jpg" || imgText == ".jpeg" || imgText == ".png")
+                {
+                    //Store in database
+                    user.UploadImage = "~/Images/" + fileobj.FileName;
+                    await _db_context.SaveChangesAsync();
+                }
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

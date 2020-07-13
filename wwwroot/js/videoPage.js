@@ -8,21 +8,29 @@ function userColumn() {
   for (var i = 0; i < categories.length; i++) {
     outputHTML += "<tr>";
     outputHTML += "<td><h3>" + categories[i] + "</h3></td>";
-    outputHTML += "<table>";
-    for (var j = 0; j < 4; j++) {
+      outputHTML += "<table>";
       outputHTML += "<tr>";
+    for (var j = 0; j < 4; j++) {
+      
       outputHTML +=
-        "<td><img src='/img/sampleImg1.jpeg' asp-append-version='true' height='150px' width='300px'></td>"; //(3)
-          outputHTML +=
-        "<td><ul id = 'titleAndDesc'><li class='font-weight-bold'><h3> Title " +
-        j +
-        "</h3></li>"; //(4)
-      outputHTML +=
-        "<li><p class='font-weight-light'> Description " + j + "</p></li>"; //(5)
-      outputHTML += "</ul></td>";
-      outputHTML += "</tr>";
-    }
+        "<td><img src='/img/sampleImg1.jpeg' asp-append-version='true' height='150px' width='270px'></td>"; //(3)
 
+    }
+      outputHTML += "<tr>";
+      for (var j = 0; j < 4; j++) {
+
+          outputHTML +=
+              "<td><ul id = 'titleAndDesc'><li class='font-weight-bold'><h3> Title " +
+              j +
+              "</h3></li>"; //(4)
+          outputHTML +=
+              "<li><p class='font-weight-light'> Author " + j + "</p></li>"; //(5)
+          outputHTML +=
+              "<li><p class='font-weight-light'> Views | Creation Date " + j + "</p></li>"
+          outputHTML += "</ul></td>";
+      }
+      outputHTML += "</tr>";
+      outputHTML += "</tr>";
     outputHTML += "</table>";
     outputHTML += "</tr>";
   }

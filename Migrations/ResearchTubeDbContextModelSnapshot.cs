@@ -162,15 +162,9 @@ namespace ResearchTube.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -212,12 +206,6 @@ namespace ResearchTube.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Position")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Postcode")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Province")
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SecurityStamp")

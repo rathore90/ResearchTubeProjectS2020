@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -60,10 +59,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 UploadImage = user.UploadImage
             };
-
-            
         }
-
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -113,57 +109,9 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             }
 
 
-            if (Input.FirstName != user.FirstName)
-            {
-                user.FirstName = Input.FirstName;
-            }
-
-            if (Input.LastName != user.LastName)
-            {
-                user.LastName = Input.LastName;
-            }
-
-            if (Input.Interest != user.Interest)
-            {
-                user.Interest = Input.Interest;
-            }
-
-            if (Input.Position != user.Position)
-            {
-                user.Position = Input.Position;
-            }
-
-           /* if (Input.Country != user.Country)
-            {
-                user.Country = Input.Country;
-            }
-
-            if (Input.Province != user.Province)
-            {
-                user.Province = Input.Province;
-            }
-
-            if (Input.Address != user.Address)
-            {
-                user.Address = Input.Address;
-            }
-
-            if (Input.Postcode != user.Postcode)
-            {
-                user.Postcode = Input.Postcode;
-            }
-
-            if (Input.University != user.University)
-            {
-                user.University = Input.University;
-            }*/
-
-            await _userManager.UpdateAsync(user);
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
-
     }
 }

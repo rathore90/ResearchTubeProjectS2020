@@ -57,14 +57,22 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+#nullable enable
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "First Name", Prompt = "First Name")]
-            public string FirstName { get; set; }
+            public string? FirstName { get; set; }
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Last Name", Prompt = "Last Name")]
-            public string LastName { get; set; }
+            public string? LastName { get; set; }
+            
+            [DataType(DataType.Text)]
+            [Display(Name = "Upload Image", Prompt = "Profile Image")]
+            public string? UploadImage { get; set; }
+
+#nullable disable
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email", Prompt = "example@example.com")]
@@ -80,7 +88,6 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password", Prompt = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Position", Prompt = "Position")]
@@ -90,19 +97,15 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "Interest", Prompt = "Interest")]
             public string Interest { get; set; }
-
-            [DataType(DataType.Text)]
-            [Display(Name = "Upload Image", Prompt = "Profile Image")]
-            public string UploadImage { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string? returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu, string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile fileobj, ResearchTubeUser rtu, string? returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -129,17 +132,17 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                     //_logger.Log(LogLevel.Warning, confirmationLink);
 
                     //Upload Image
-                    String imgText = Path.GetExtension(fileobj.FileName).ToLower();
-                    if (imgText == ".jpg" || imgText == ".jpeg" || imgText == ".png")
+                    if (fileobj != null)
                     {
-                        var uploading = Path.Combine(_iweb.WebRootPath, "Images", fileobj.FileName);
-                        var stream = new FileStream(uploading, FileMode.Create);
-                        await fileobj.CopyToAsync(stream);
-
-                        //Store in database
-                        user.UploadImage = uploading;
-                        await _db_context.SaveChangesAsync();
+                        String imgText = Path.GetExtension(fileobj.FileName).ToLower();
+                        if (imgText == ".jpg" || imgText == ".jpeg" || imgText == ".png")
+                        {
+                            //Store in database
+                            user.UploadImage = "~/Images/" + fileobj.FileName;
+                            await _db_context.SaveChangesAsync();
+                        }
                     }
+                    
 
                     _logger.LogInformation("User created a new account with password.");
 

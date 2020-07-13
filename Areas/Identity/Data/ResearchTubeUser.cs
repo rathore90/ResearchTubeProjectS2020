@@ -10,14 +10,20 @@ namespace ResearchTube.Areas.Identity.Data
     // Add profile data for application users by adding properties to the ResearchTubeUser class
     public class ResearchTubeUser : IdentityUser
     {
+#nullable enable
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
+        [PersonalData]
+        [Column(TypeName = "nvarchar(max)")]
+        public string? UploadImage { get; set; }
+
+#nullable disable
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Position { get; set; }
@@ -26,8 +32,6 @@ namespace ResearchTube.Areas.Identity.Data
         [Column(TypeName = "nvarchar(100)")]
         public string Interest { get; set; }
 
-        [PersonalData]
-        [Column(TypeName = "nvarchar(max)")]
-        public string UploadImage { get; set; }
+
     }
 }

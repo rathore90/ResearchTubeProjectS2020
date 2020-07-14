@@ -19,6 +19,28 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\webuploader-0.1.5\Uploader.swf" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.custom.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.custom.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.fis.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.flashonly.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.flashonly.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.html5only.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.html5only.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.noimage.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.noimage.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.nolog.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.nolog.min.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.withoutimage.js" />
+    <None Include="wwwroot\webuploader-0.1.5\webuploader.withoutimage.min.js" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

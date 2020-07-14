@@ -30,6 +30,13 @@ namespace ResearchTube
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddDbContext<ResearchTubeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ResearchTubeDbContextConnection")));
+            services.AddDefaultIdentity<ResearchTubeUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+                .AddEntityFrameworkStores<ResearchTubeDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

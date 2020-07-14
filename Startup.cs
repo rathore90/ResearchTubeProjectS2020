@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResearchTube.Areas.Identity.Data;
+using Stripe;
 
 namespace ResearchTube
 {
@@ -30,6 +31,17 @@ namespace ResearchTube
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+
+            //-----Stripe-------
+            services.Configure<StripeOptions>(stripeOptions =>
+            {
+                stripeOptions.StripePublishableKey = Environment.GetEnvironmentVariable("STRIPE_PUBLISHABLE_KEY");
+                stripeOptions.StripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+                stripeOptions.StripeWebhookSecret = Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SECRET");
+                stripeOptions.SubscriptionPriceId = Environment.GetEnvironmentVariable("SUBSCRIPTION_PRICE_ID");
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

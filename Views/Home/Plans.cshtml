@@ -1,4 +1,4 @@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ResearchTubeUser> SignInManager
 @inject UserManager<ResearchTubeUser> UserManager
 
@@ -33,12 +33,11 @@
                 <li><span style="color: green">✓</span> Feature 1</li>
                 <li><span style="color: red">X</span> Feature 2</li>
                 <li><span style="color: red">X</span> Feature 3</li>
-                
                 @if (SignInManager.IsSignedIn(User)){
-                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li> //If already signed in, take them to payment page instead. In future will do validation to see if they've already have a premium account with us
+                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Subscribe to a Plan</a></li>
                 }else{
                 <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
-                }
+                }                
 
 
             </ul>
@@ -52,7 +51,7 @@
                 <li><span style="color: red">X</span> Feature 3</li>
                 
                 @if (SignInManager.IsSignedIn(User)){
-                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li>
+                <li class="grey"><a asp-area="" asp-controller="/Home" asp-action="BasicPlanPage" class="button">Subscribe to a Plan</a></li>
                 }else{
                 <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
                 }
@@ -66,11 +65,14 @@
                 <li><span style="color: green">✓</span> Feature 1</li>
                 <li><span style="color: green">✓</span> Feature 2</li>
                 <li><span style="color: green">✓</span> Feature 3</li>
-                
-                @if (SignInManager.IsSignedIn(User)){
-                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up asdfasdfasdf</a></li>
-                }else{
-                <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="grey"><a asp-area="" asp-controller="/Home" asp-action="PremiumPlanPage" class="button">Subscribe to a Plan</a></li>
+                }
+                else
+                {
+                    <li class="grey"><a asp-area="Identity" asp-page="/Account/Register" class="button">Sign Up</a></li>
                 }
             </ul>
         </div>

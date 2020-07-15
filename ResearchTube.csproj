@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200715041855_RefactorPaymentVideoTable.cs" />
+    <Compile Remove="Migrations\20200715041855_RefactorPaymentVideoTable.Designer.cs" />
+    <Compile Remove="Migrations\20200715042308_RefactorPaymentVideoTable.cs" />
+    <Compile Remove="Migrations\20200715042308_RefactorPaymentVideoTable.Designer.cs" />
+    <Compile Remove="Migrations\20200715042432_RefactorPaymentVideoTable.cs" />
+    <Compile Remove="Migrations\20200715042432_RefactorPaymentVideoTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />

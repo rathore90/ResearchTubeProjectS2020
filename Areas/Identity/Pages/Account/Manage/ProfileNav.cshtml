@@ -1,0 +1,11 @@
+﻿
+@inject SignInManager<ResearchTubeUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+    <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="nav-link @ProfileNavModel.HomeNavClass(ViewContext)" id="home" asp-page="./Index">Home</a>
+        <a class="nav-link @ProfileNavModel.ProfileNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a>
+        <a class="nav-link @ProfileNavModel.SettingsNavClass(ViewContext)" id="profile" asp-page="./_Layout">Settings</a>
+        <a class="nav-link @ProfileNavModel.VideoLibraryNavClass(ViewContext)" id="profile" asp-page="./Library">VideoLibrary</a>
+    </nav>

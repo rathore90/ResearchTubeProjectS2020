@@ -1,8 +1,8 @@
 ﻿@page
 @model ResearchTube.Areas.Identity.Pages.Account.Manage.LibraryModel
 @{
-    ViewData["Title"] = "Library";
-    ViewData["ActivePage"] = ManageNavPages.Email;
+    ViewData["Title"] = "VideoLibrary";
+    ViewData["ActivePage"] = ProfileNavModel.VideoLibrary;
 }
 <h4>@ViewData["Title"]</h4>
 <hr class="featurette-divider">
@@ -121,3 +121,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

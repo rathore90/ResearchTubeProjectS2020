@@ -33,7 +33,7 @@
                             <img class="rounded-circle" src="~/Images/default.jpg" width="100" height="100 " alt="User" asp-append-version="true" />
                             <div>Hello, @(user.FirstName)</div>
                         </div>
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/ProfileHome" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
                         <form class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                             <button type="submit" class="nav-link btn btn-link">Logout</button>
                         </form>

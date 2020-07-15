@@ -10,8 +10,8 @@ using ResearchTube.Data;
 namespace ResearchTube.Migrations
 {
     [DbContext(typeof(ResearchTubeDbContext))]
-    [Migration("20200714043916_AddPaymentTable")]
-    partial class AddPaymentTable
+    [Migration("20200715053150_RemoveDiscrimination")]
+    partial class RemoveDiscrimination
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,6 +227,21 @@ namespace ResearchTube.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ResearchTube.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("ResearchTube.Models.Payment", b =>
                 {
                     b.Property<int>("PaymentId")
@@ -234,11 +249,11 @@ namespace ResearchTube.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Last4")
+                    b.Property<int?>("Last4")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentMethodId")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentMethodId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlanType")
                         .HasColumnType("nvarchar(max)");
@@ -250,15 +265,57 @@ namespace ResearchTube.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("current_period_end")
+                    b.Property<DateTime?>("current_period_end")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("current_period_start")
+                    b.Property<DateTime?>("current_period_start")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("subscriptionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 
                     b.ToTable("Payment");
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.Video", b =>
+                {
+                    b.Property<int>("VideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFree")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("VideoCategoryCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VideoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VideoId");
+
+                    b.HasIndex("VideoCategoryCategoryId");
+
+                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("ResearchTube.Areas.Identity.Data.ResearchTubeUser", b =>
@@ -332,6 +389,13 @@ namespace ResearchTube.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.Video", b =>
+                {
+                    b.HasOne("ResearchTube.Models.Category", "VideoCategory")
+                        .WithMany()
+                        .HasForeignKey("VideoCategoryCategoryId");
                 });
 #pragma warning restore 612, 618
         }

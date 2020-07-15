@@ -14,6 +14,8 @@ namespace ResearchTube.Data
     {
         public DbSet<ResearchTubeUser> ResearchTubeUsers { get; set; }
         public DbSet<Payment> Payment { get; set; }
+
+        public DbSet<Video> Video { get; set; }
         public ResearchTubeDbContext(DbContextOptions<ResearchTubeDbContext> options)
             : base(options)
         {

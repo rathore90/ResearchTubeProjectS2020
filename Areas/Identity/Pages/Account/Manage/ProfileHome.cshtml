@@ -1,0 +1,32 @@
+﻿@page
+@model ResearchTube.Areas.Identity.Pages.Account.Manage.ProfileHomeModel
+@{
+    ViewData["Title"] = "Home";
+    ViewData["ActivePage"] = ProfileNav.Home;
+}
+<div class="container">
+    <image class="rounded-2" style="width:250px; height:150px" src="/image/mountain.jfif" asp-append-version="true"></image>
+    <div class="row col-md-6">
+        <div class="col-md-1">
+            <image class="rounded-circle" style="width:40px; height:40px; margin-top:20px" src="/image/mountain.jfif" asp-append-version="true"></image>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="form-control" style="margin-top:10px; height:25px; font-weight:bold;font-display:auto">Title</label>
+                <label class="form-control" style="height:25px">Name</label>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label class="form-control" style="height:25px; font-size:12px;">number of view</label>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-control" style="height:25px; font-size:12px;">date created</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

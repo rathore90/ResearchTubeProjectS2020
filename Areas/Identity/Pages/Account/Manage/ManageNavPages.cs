@@ -24,7 +24,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
-        public static string LibraryData => "LibraryData";
+        //public static string LibraryData => "LibraryData";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -42,7 +42,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
-        public static string LibraryDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, LibraryData);
+       //public static string LibraryDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, LibraryData);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

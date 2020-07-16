@@ -7,7 +7,7 @@
 @inject UserManager<ResearchTubeUser> UserManager
 @{
     ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+    ViewData["ActivePage"] = ProfileNav.Profile;
     var user = await UserManager.GetUserAsync(User);
 }
 

@@ -1,4 +1,11 @@
-﻿@{
+﻿
+
+@using Microsoft.AspNetCore.Identity
+@using ResearchTube.Areas.Identity.Data
+
+@inject SignInManager<ResearchTubeUser> SignInManager
+@inject UserManager<ResearchTubeUser> UserManager
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
     {
         Layout = (string)parentLayout;
@@ -7,23 +14,36 @@
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
+    var user = await UserManager.GetUserAsync(User);
 }
-
-<h2>Manage your account</h2>
 
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img class="rounded-circle" src="@Url.Content(@user.UploadImage ?? "~/Images/default.jpg")" width="150" height="150" alt="User" asp-append-version="true" style="margin:auto" />
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-control" style="margin-top:30px">@user.FirstName @user.LastName </div>
+                    <br />
+                    <div class="form-control">@user.Email</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
-    </div>
-</div>
 
-@section Scripts {
-    @RenderSection("Scripts", required: false)
-}
+        <br />
+        <hr />
+        <div>
+            <partial name="_ProfileNav" />
+        </div><br /><br />
+        
+        <div >
+                @RenderBody()
+        </div>
+ 
+    </div>
+
+    @section Scripts {
+        @RenderSection("Scripts", required: false)
+    }

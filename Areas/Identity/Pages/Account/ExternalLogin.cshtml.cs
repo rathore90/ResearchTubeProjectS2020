@@ -107,11 +107,15 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                 // If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 ProviderDisplayName = info.ProviderDisplayName;
+                string FullName = info.Principal.FindFirstValue(ClaimTypes.Name);
+
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FirstName = FullName.Substring(0, FullName.IndexOf(" ")),
+                        LastName = FullName.Substring(FullName.IndexOf(" ") + 1)
                     };
                 }
                 return Page();

@@ -19,7 +19,7 @@
     @if (SignInManager.IsSignedIn(User)){
         //Here will go new Home Page (Signed IN)
         <h1>Signed In</h1>
-        <h2>Recommended for @user.FirstName?? @user.UserName</h2>
+        <h2>Recommended for @(user.FirstName?? user.UserName)</h2>
 
     }
     else{

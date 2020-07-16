@@ -26,7 +26,7 @@
             }
             else
             {
-                if (user.FirstName == null)
+                if (user.FirstName == null || user.LastName == null)
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link text-light dropdown-toggle" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>@(user.UserName)</span></a>

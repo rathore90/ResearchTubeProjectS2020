@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ResearchTube.Data;
-using ResearchTube.Models;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ResearchTube.Controllers
@@ -14,16 +13,15 @@ namespace ResearchTube.Controllers
     {
         // GET: /<controller>/
         private readonly ResearchTubeDbContext _db;
-        //public readonly Payment payment;
         
         public PaymentController(ResearchTubeDbContext db)
         {
-            //this.payment = payment;
             _db = db;
         }
 
         public IActionResult Plans()
         {
+            
             return View();
         }
 

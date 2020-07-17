@@ -27,6 +27,7 @@ namespace ResearchTube.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 

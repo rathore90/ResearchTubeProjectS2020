@@ -10,7 +10,7 @@
 
 <p id="external-login-description" class="text-info">
     You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
+    Please enter the information for this site below and click the Register button to finish
     logging in.
 </p>
 
@@ -18,12 +18,49 @@
     <div class="col-md-4">
         <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.Position"></label>
+                        <input asp-for="Input.Position" class="form-control" />
+                        <span asp-validation-for="Input.Position" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Input.Interest"></label>
+                        <input asp-for="Input.Interest" class="form-control" />
+                        <span asp-validation-for="Input.Interest" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+                <div class="form-group">
+                    <label asp-for="Input.UploadImage"></label>
+                    <input type="file" asp-for="Input.UploadImage" class="form-control" name="fileobj" />
+                    <span asp-validation-for="Input.UploadImage" class="text-danger"></span>
+                </div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
         </form>
     </div>
 </div>

@@ -49,9 +49,18 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            public string? FirstName { get; set; }
+
+            public string? LastName { get; set; }
+
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            public string? Position { get; set; }
+
+            public string? Interest { get; set; }
+            public string? UploadImage { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -59,7 +68,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             return RedirectToPage("./Login");
         }
 
-        public IActionResult OnPost(string provider, string returnUrl = null)
+        public IActionResult OnPost(string provider, string? returnUrl = null)
         {
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
@@ -67,7 +76,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             return new ChallengeResult(provider, properties);
         }
 
-        public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> OnGetCallbackAsync(string? returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
@@ -98,11 +107,15 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                 // If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 ProviderDisplayName = info.ProviderDisplayName;
+                string FullName = info.Principal.FindFirstValue(ClaimTypes.Name);
+
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FirstName = FullName.Substring(0, FullName.IndexOf(" ")),
+                        LastName = FullName.Substring(FullName.IndexOf(" ") + 1)
                     };
                 }
                 return Page();
@@ -122,7 +135,16 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ResearchTubeUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ResearchTubeUser 
+                { 
+                    UserName = Input.Email, 
+                    Email = Input.Email, 
+                    FirstName = Input.FirstName, 
+                    LastName = Input.LastName,
+                    Position = Input.Position,
+                    Interest = Input.Interest,
+                    UploadImage = Input.UploadImage
+                };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)

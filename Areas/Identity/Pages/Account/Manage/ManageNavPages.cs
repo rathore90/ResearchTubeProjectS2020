@@ -8,7 +8,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
-        public static string Index => "Index";
+        //public static string Index => "Index";
 
         public static string Email => "Email";
 
@@ -26,7 +26,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         //public static string LibraryData => "LibraryData";
 
-        public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+        //public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 

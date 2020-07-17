@@ -105,15 +105,7 @@ namespace ResearchTube.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult PremiumPlanPage()
-        {
-            return View();
-        }
-        public IActionResult BasicPlanPage()
-        {
-            return View();
-        }
-        
+       
        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

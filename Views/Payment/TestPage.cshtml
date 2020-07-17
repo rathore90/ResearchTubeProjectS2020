@@ -13,8 +13,9 @@
     <h3>The user id is @user.Id</h3>
 
     <form asp-controller="Payment"
-          asp-action="ProcessAccount" method="post">
+          asp-action="Upgrade" method="post">
         <br />
+        <input type="text" name="uid" value="@user.Id" />
         <input type="submit" name="save" value="Upgrade to Pro!" />
     </form>
 

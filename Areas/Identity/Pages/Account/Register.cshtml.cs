@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ResearchTube.Areas.Identity.Data;
 using ResearchTube.Data;
-
+using ResearchTube.Models;
 namespace ResearchTube.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -123,9 +123,22 @@ namespace ResearchTube.Areas.Identity.Pages.Account
                     Interest = Input.Interest,
                     UploadImage = Input.UploadImage
                 };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                Payment paymentUser = new Payment
+                {
+                    UserId = user.Id,
+                    PlanType = "free",
+                };
+
+                _db_context.Payments.Add(paymentUser);
+                _db_context.SaveChanges();
+
                 if (result.Succeeded)
                 {
+                    
+
                     //Email Confirmation
                     //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);

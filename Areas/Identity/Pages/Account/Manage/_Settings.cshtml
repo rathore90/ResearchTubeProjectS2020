@@ -1,9 +1,15 @@
 ﻿
 @{
 
-    ViewData["Title"] = "Settings";
-    ViewData["ActivePage"] = ProfileNav.Settings;
-
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        //Layout = "/Areas/Identity/Pages/_Settings.cshtml";
+        Layout = "/Views/Shared/_Settings.cshtml";
+    }
 }
 <h2>Manage your account</h2>
 
@@ -19,4 +25,7 @@
         </div>
     </div>
 </div>
-@RenderSection("scripts", required: false)
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
+

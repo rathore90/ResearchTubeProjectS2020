@@ -34,6 +34,7 @@
                             <div>Hello, @(user.FirstName)</div>
                         </div>
                         <a asp-area="Identity" asp-page="/Account/Manage/ProfileHome" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Settinngs</a>
                         <form class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                             <button type="submit" class="nav-link btn btn-link">Logout</button>
                         </form>

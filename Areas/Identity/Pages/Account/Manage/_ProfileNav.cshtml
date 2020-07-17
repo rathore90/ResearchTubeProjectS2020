@@ -3,9 +3,23 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 
-<ul class="nav nav-pills">
-    <li class="active"><a class="nav-link @ProfileNav.HomeNavClass(ViewContext)" id="home" asp-page="./ProfileHome">Home</a></li>
-    <li><a class="nav-link @ProfileNav.ProfileNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li><a class="nav-link @ProfileNav.SettingsNavClass(ViewContext)" id="setting" asp-page="/Account/Manage/Email">Settings</a></li>
-    <li><a class="nav-link @ProfileNav.VideoLibraryNavClass(ViewContext)" id="videolibrary" asp-page="./Library">VideoLibrary</a></li>
-</ul>
+    <ul class="nav nav-pills">
+        <li class="active"><a class="nav-link @ProfileNav.HomeNavClass(ViewContext)" id="home" asp-page="./ProfileHome">Home</a></li>
+        <li><a class="nav-link @ProfileNav.ProfileNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+        <li><a class="nav-link @ProfileNav.VideoLibraryNavClass(ViewContext)" id="videolibrary" asp-page="./Library">VideoLibrary</a></li>
+        <li><a class="nav-link @ProfileNav.SettingsNavClass(ViewContext)" id="setting" asp-page="">Settings</a></li>
+        <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu">
+                <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a>
+                <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a>
+                <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                @if (hasExternalLogins)
+                {
+                    <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a>
+                }
+                <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a>
+            </div>
+                </li>
+            </ul>
+

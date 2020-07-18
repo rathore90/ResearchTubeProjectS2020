@@ -8,15 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200715041855_RefactorPaymentVideoTable.cs" />
-    <Compile Remove="Migrations\20200715041855_RefactorPaymentVideoTable.Designer.cs" />
-    <Compile Remove="Migrations\20200715042308_RefactorPaymentVideoTable.cs" />
-    <Compile Remove="Migrations\20200715042308_RefactorPaymentVideoTable.Designer.cs" />
-    <Compile Remove="Migrations\20200715042432_RefactorPaymentVideoTable.cs" />
-    <Compile Remove="Migrations\20200715042432_RefactorPaymentVideoTable.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.0.1" />
     <PackageReference Include="Google.Apis" Version="1.48.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.48.0" />

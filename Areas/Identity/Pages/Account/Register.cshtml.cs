@@ -62,6 +62,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             [Display(Name = "First Name", Prompt = "First Name")]
             public string? FirstName { get; set; }
+
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Last Name", Prompt = "Last Name")]
@@ -88,6 +89,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password", Prompt = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Position", Prompt = "Position")]

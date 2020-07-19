@@ -8,7 +8,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
-        public static string Index => "Index";
+        //public static string Index => "Index";
 
         public static string Email => "Email";
 
@@ -24,7 +24,17 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
-        public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+        public static string Home => "Home";
+
+        public static string Profile => "Profile";
+
+        public static string VideoLibrary => "VideoLibrary";
+
+        public static string Stripe => "Stripe";
+
+        //public static string LibraryData => "LibraryData";
+
+        //public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 
@@ -40,6 +50,15 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
+        //public static string LibraryDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, LibraryData);
+
+        public static string HomeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Home);
+
+        public static string ProfileNavClass(ViewContext viewContext) => PageNavClass(viewContext, Profile);
+
+        public static string StripeNavClass(ViewContext viewContext) => PageNavClass(viewContext, Stripe);
+
+        public static string VideoLibraryNavClass(ViewContext viewContext) => PageNavClass(viewContext, VideoLibrary);
         private static string PageNavClass(ViewContext viewContext, string page)
         {
             var activePage = viewContext.ViewData["ActivePage"] as string

@@ -1,15 +1,24 @@
-﻿@inject SignInManager<ResearchTubeUser> SignInManager
+﻿
+@inject SignInManager<ResearchTubeUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+    <ul class="nav nav-pills">
+        <li class="active"><a class="nav-link @ManageNavPages.HomeNavClass(ViewContext)" id="home" asp-page="./ProfileHome">Home</a></li>
+        <li><a class="nav-link @ManageNavPages.ProfileNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+        <li><a class="nav-link @ManageNavPages.VideoLibraryNavClass(ViewContext)" id="videolibrary" asp-page="./Library">VideoLibrary</a></li>
+        <li class="dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+            <div class="dropdown-menu nav-pills">
+                <a class="dropdown-item @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a>
+                <a class="dropdown-item @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a>
+                <a class="dropdown-item @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                @if (hasExternalLogins)
+                {
+                    <a id="external-login" class="dropdown-item @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a>
+                }
+                <a class="dropdown-item @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a>
+            </div>
+        </li>
+        <li><a class="nav-link @ManageNavPages.VideoLibraryNavClass(ViewContext)" id="videolibrary" asp-page="">Stripe</a></li>
+    </ul>

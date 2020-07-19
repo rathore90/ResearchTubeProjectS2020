@@ -5,3 +5,13 @@
     margin-left: 0;
     margin-right:0;
 }
+
+.card.login-logout-tab.auth-header {
+    background: #333;
+    color: white;
+    border: 2px solid white;
+    border-radius: .5rem;
+}
+.auth-header-tab{
+    background-color: darkgray;
+}

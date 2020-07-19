@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResearchTube.Areas.Identity.Data;
+using Microsoft.Extensions.Options;
 
 namespace ResearchTube
 {
@@ -30,6 +31,20 @@ namespace ResearchTube
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddDbContext<ResearchTubeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ResearchTubeDbContextConnection")));
+            services.AddAuthentication()
+                    .AddGoogle(options => 
+                    {
+                        options.ClientId = "520092824399-17uhd8ubrarku71uas0es3su561ilr5h.apps.googleusercontent.com";
+                        options.ClientSecret = "JrbvHwaavxIv4RqnHCq_RYe6";
+                    })
+                    .AddFacebook(options =>
+                    {
+                        options.AppId = "876955309474024";
+                        options.AppSecret = "af18667feac5ffb21741b75e699b30fe";
+                    });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

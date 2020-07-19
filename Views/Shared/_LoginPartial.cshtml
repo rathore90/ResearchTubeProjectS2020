@@ -8,22 +8,58 @@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-            <li class="nav-item">
-                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><div id="user-button">@(user.FirstName.Substring(0,1))@(user.LastName.Substring(0,1))</div></a>
-            </li>
-            <li class="nav-item">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
-                </form>
 
-            </li>
-
-
-            <form class="form-inline my-1 my-lg-0">
-                <button class="btn btn-outline-primary my-2 my-sm-0" asp-area="Identity" asp-page="/Account/UploadVideo">Create Video</button>
-            </form>
-
-
+            if (user.UploadImage != null)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-light dropdown-toggle" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="rounded-circle" src="@Url.Content(user.UploadImage)" width="37" height="30 " alt="User" asp-append-version="true" /></a>
+                    <div class="dropdown-menu user-profile-dropdown">
+                        <div class="user-image">
+                            <img class="rounded-circle" src="@Url.Content(user.UploadImage)" width="100" height="100 " alt="User" asp-append-version="true" />
+                            <div>Hello, @(user.FirstName)</div>
+                        </div>
+                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
+                        <form class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="nav-link btn btn-link">Logout</button>
+                        </form>
+                    </div>
+                </li>
+            }
+            else
+            {
+                if (user.FirstName == null || user.LastName == null)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-light dropdown-toggle" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>@(user.UserName)</span></a>
+                        <div class="dropdown-menu user-profile-dropdown">
+                            <div class="user-image">
+                                <img class="rounded-circle" src="~/Images/default.jpg" width="100" height="100 " alt="User" asp-append-version="true" />
+                                <div>Hello, @(user.UserName)</div>
+                            </div>
+                            <a asp-area="Identity" asp-page="/Account/Manage/ProfileHome" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
+                            <form class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-light dropdown-toggle" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div id="user-button">@(user.FirstName.Substring(0,1))@(user.LastName.Substring(0,1))</div></a>
+                        <div class="dropdown-menu user-profile-dropdown">
+                            <div class="user-image">
+                                <img class="rounded-circle" src="~/Images/default.jpg" width="100" height="100 " alt="User" asp-append-version="true" />
+                                <div>Hello, @(user.FirstName)</div>
+                            </div>
+                            <a asp-area="Identity" asp-page="/Account/Manage/ProfileHome" class="nav-link dropdown-item">&nbsp&nbsp&nbsp&nbsp&nbsp    Profile</a>
+                            <form class="dropdown-item form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="nav-link btn btn-link">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                }
+            }
         }
         else
         {
@@ -36,6 +72,7 @@
             <form class="form-inline my-1 my-lg-0">
                 <button class="btn btn-outline-primary my-2 my-sm-0" asp-area="Identity" asp-page="/Account/Login">Create Video</button>
             </form>
+
         }
     </ul>
 

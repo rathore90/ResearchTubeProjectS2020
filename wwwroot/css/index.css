@@ -1,3 +1,41 @@
+﻿html,body {
+    margin: 0;
+    padding: 0;
+}
+
+.firstBlueBar {
+    background-color: rgba(255, 255, 255, 0.25);
+    width: 100%;
+    color: white;
+    margin-top: 17em;
+    margin-bottom: 20em;
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+
+.whiteBar {
+    width: 100%;
+    color: white;
+    height: 32rem;
+}
+
+.orangeBar {
+    background-color: rgb(216,80,2);
+    color: white;
+    font: italic;
+    width: 100%;
+    padding-top: 5em;
+    padding-bottom: 5em;
+    margin-bottom: 5em;
+    margin-top: 5em;
+}
+
+.centeredText {
+    text-align: center;
+}
+
+#user-button {
+    border-radius: 50%;
 ﻿body {
     background-color: #333;
     color: white;

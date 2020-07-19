@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ResearchTubeUser> SignInManager
+@inject UserManager<ResearchTubeUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+<html>
+<head>
+</head>
+<body>
+    <h1>This is a test</h1>
+    <h3>The user id is @user.Id</h3>
+
+    <form asp-controller="Payment"
+          asp-action="Upgrade" method="post">
+        <br />
+        <input type="text" name="uid" value="@user.Id" />
+        <input type="submit" name="save" value="Upgrade to Pro!" />
+
+    </form>
+
+
+
+    <form asp-controller="Payment"
+          asp-action="StripeCustId" method="post">
+        <br />
+        <input type="text" name="uid" value="@user.Id" />
+        <input type="submit" name="save" value="Create your Stripe Account!" />
+
+    </form>
+
+    <form asp-controller="Payment"
+          asp-action="StripePortal" method="post">
+        <br />
+        <input type="text" name="uid" value="@user.UserName" />
+        <button type="submit" id="checkout-button">Manage billing</button>
+
+
+    </form>
+
+    <form asp-controller="Payment"
+          asp-action="create_customer_portal_session" method="post">
+        <br />
+        <input type="text" name="uid" value="@user.UserName" />
+        <button type="submit" id="checkout-button">Click here to go to billing portal</button>
+
+
+    </form>
+
+    <script>
+        var stripe = Stripe('pk_test_51GtSONETdjG0caU1urBtCRuAeA2KsB92MjUzkLQR8LhopftaXkW6EDW9N2Ax8Q9gMuldvYgRj4FPfPgIC1EGuUtm00D5sjnRNu');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function () {
+            stripe.redirectToCheckout({
+                // Make the id field from the Checkout Session creation API response
+                // available to this file, so you can provide it as argument here
+                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                sessionId: '{{CHECKOUT_SESSION_ID}}'
+            }).then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer
+                // using `result.error.message`.
+            });
+        });
+    </script>
+    <script src="https://js.stripe.com/v3/" ></script>
+</body>
+</html>

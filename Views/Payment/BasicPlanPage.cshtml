@@ -1,0 +1,77 @@
+﻿@page
+@{
+    //ViewData["Title"] = "Basic Plan Page";
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>ResearchTube Basic Plan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/css/stripeNormalize.css" />
+    <link rel="stylesheet" href=" /css/stripeGlobal.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/js/stripe.js" defer></script>
+
+</head>
+
+<body>
+    <div class="sr-root">
+        <div class="sr-main">
+            <header class="sr-header">
+                <h1>Research<span style="color: #0275d8;">Tube </span></h1>
+            </header>
+            <div class="sr-payment-summary payment-view">
+                <h1 class="order-amount">$9.99</h1>
+                <h4>Subscribe to the <span style="font: bold;">Basic</span> Plan</h4>
+            </div>
+            <form>
+                <div class="sr-payment-form payment-view">
+                    <div class="sr-form-row">
+                        <label for="card-element">
+                            Payment details
+                        </label>
+                        <div class="sr-combo-inputs">
+                            <div class="sr-combo-inputs-row">
+                                <input type="text"
+                                       id="email"
+                                       placeholder="Email"
+                                       autocomplete="cardholder"
+                                       class="sr-input" />
+                            </div>
+                            <div class="sr-combo-inputs-row">
+                                <div class="sr-input sr-card-element" id="card-element"></div>
+                            </div>
+                        </div>
+                        <div class="sr-field-error" id="card-errors" role="alert"></div>
+                    </div>
+                    <button id="submit">
+                        <div id="spinner" class="hidden"></div>
+                        <span id="button-text">Subscribe</span>
+                    </button>
+                    <div class="sr-legal-text">
+                        Your card will be immediately charged
+                        <span class="order-total">$9.99</span>.
+                    </div>
+                </div>
+            </form>
+
+            <div class="sr-payment-summary hidden completed-view">
+                <h1>Your subscription is <span class="order-status"></span></h1>
+                <h4>
+                    <a>View subscription response:</a>
+                </h4>
+            </div>
+            <div class="sr-section hidden completed-view">
+                <div class="sr-callout">
+                    <pre><code></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

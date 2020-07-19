@@ -56,6 +56,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+
                 PhoneNumber = phoneNumber,
                 UploadImage = user.UploadImage
             };
@@ -107,7 +108,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                     await _db_context.SaveChangesAsync();
                 }
             }
-
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

@@ -31,5 +31,6 @@ namespace ResearchTube.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Interest { get; set; }
+
     }
 }

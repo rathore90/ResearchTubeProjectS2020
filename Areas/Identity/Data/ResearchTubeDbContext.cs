@@ -13,7 +13,7 @@ namespace ResearchTube.Data
     public class ResearchTubeDbContext : IdentityDbContext
     {
         public DbSet<ResearchTubeUser> ResearchTubeUsers { get; set; }
-        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Payment> Payment { get; set; }
 
         public DbSet<Video> Video { get; set; }
         public ResearchTubeDbContext(DbContextOptions<ResearchTubeDbContext> options)

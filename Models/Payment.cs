@@ -30,7 +30,6 @@ namespace ResearchTube.Models
 
         public Payment()
         {
-            //this.PaymentId
             this.PlanType = "free";
         }
     }

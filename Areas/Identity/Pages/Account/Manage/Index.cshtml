@@ -1,14 +1,8 @@
 ﻿@page
 @model IndexModel
-@using Microsoft.AspNetCore.Identity
-@using ResearchTube.Areas.Identity.Data
-
-@inject SignInManager<ResearchTubeUser> SignInManager
-@inject UserManager<ResearchTubeUser> UserManager
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Profile;
-    var user = await UserManager.GetUserAsync(User);
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -28,119 +22,15 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
-                <label asp-for="Input.FirstName"></label>
-                <input asp-for="Input.FirstName" class="form-control" />
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.LastName"></label>
-                <input asp-for="Input.LastName" class="form-control" />
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Interest"></label>
-                <input asp-for="Input.Interest" class="form-control" />
-                <span asp-validation-for="Input.Interest" class="text-danger"></span>
-            </div>
-                <!--<label ></label>
-        <input type="checkbox" name="interest" value="CS" class="form-control" />
-        <label >CS</label>
-        <input type="checkbox" name="interest" value="AC" class="form-control" />
-        <label >AC</label>
-        <input type="checkbox" name="interest" value="BC" class="form-control" />
-        <label >BC</label>
-        <input type="checkbox" name="interest" value="WC" class="form-control" />
-        <label >WC</label>
-        <div id="divSub" class="form-group">s</div>
-        <input type="submit" id="checkSub" class="form-control" />
-        <span class="text-danger"></span>
-    </div>
-    <script src="jquery-1.11.2.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#checkSub').click(function () {
-                getSelect();
-            });
-            var getSelect = function () {
-                var result = $('input[type="checkbox"]:checked');
-                if (result.length > 0) {
-                    var resultString = result.length + "checkboxe(s) checked<br/>";
-                    result.each(function () {
-                        resultString += $(this).val() + "<br/>";
-
-                    });
-                    $('#divSub').html(resultString);
-                } else {
-                    $('#divSub').html("no select");
-                }
-            };
-        });
-    </script>-->
-                <div class="form-group">
-                    <label asp-for="Input.Position"></label><br />
-                    <input asp-for="Input.Position" class="form-check-inline" type="radio" value="Undergraduate" multiple>
-                    <label asp-for="Input.Position" class="form-check-inline">Undergraduate</label><br>
-                    <input asp-for="Input.Position" class="form-check-inline" type="radio" value="Master" multiple>
-                    <label asp-for="Input.Position" class="form-check-inline">Master</label><br>
-                    <input asp-for="Input.Position" class="form-check-inline" type="radio" value="PhD" multiple>
-                    <label asp-for="Input.Position" class="form-check-inline">PhD</label><br>
-                    <span asp-validation-for="Input.Position" class="text-danger"></span>
-                </div>
-
-                <!-- <div class="form-group">
-        <label asp-for="Input.University"></label>
-        <input asp-for="Input.University" class="form-control" />
-        <span asp-validation-for="Input.University" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Country"></label>
-        <input asp-for="Input.Country" class="form-control" />
-        <span asp-validation-for="Input.Country" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Province"></label>
-        <input asp-for="Input.Province" class="form-control" />
-        <span asp-validation-for="Input.Province" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Address"></label>
-        <input asp-for="Input.Address" class="form-control" />
-        <span asp-validation-for="Input.Address" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Postcode"></label>
-        <input asp-for="Input.Postcode" class="form-control" />
-        <span asp-validation-for="Input.Postcode" class="text-danger"></span>
-    </div>-->
-                <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
-</form>
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
     </div>
 </div>
-<!--<div class="form-check">
-       <label class="form-check-label">
-           <input asp-for="Input.Interest" type="checkbox" class="form-check-input" value="AI">AI
-       </label>
-   </div>
-   <div class="form-check">
-       <label class="form-check-label">
-           <input asp-for="Input.Interest" type="checkbox" class="form-check-input" value="Thermodymics">Thermodymics
-       </label>
-   </div><br>
-   <div class="form-check">
-       <label class="form-check-label">
-           <input asp-for="Input.Interest" type="checkbox" class="form-check-input" value="Web Programming">Web Programming
-       </label>
-   </div>
-   <div class="form-check">
-       <label class="form-check-label">
-           <input asp-for="Input.Interest" type="checkbox" class="form-check-input" value="Quantum Physics">Quantum Physics
-       </label>
-   </div>-->
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

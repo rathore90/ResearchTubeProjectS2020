@@ -31,7 +31,6 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
 
         public string Username { get; set; }
 
-
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -46,17 +45,12 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Text)]
             [Display(Name = "Upload Image", Prompt = "Profile Image")]
             public string? UploadImage { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get;  set; }
-            public string Interest { get;  set; }
-            public string Position { get;  set; }
         }
 
         private async Task LoadAsync(ResearchTubeUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            
 
             Username = userName;
 
@@ -66,10 +60,7 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = phoneNumber,
                 UploadImage = user.UploadImage
             };
-
-            
         }
-
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -119,57 +110,9 @@ namespace ResearchTube.Areas.Identity.Pages.Account.Manage
             }
             await _userManager.UpdateAsync(user);
 
-            if (Input.FirstName != user.FirstName)
-            {
-                user.FirstName = Input.FirstName;
-            }
-
-            if (Input.LastName != user.LastName)
-            {
-                user.LastName = Input.LastName;
-            }
-
-            if (Input.Interest != user.Interest)
-            {
-                user.Interest = Input.Interest;
-            }
-
-            if (Input.Position != user.Position)
-            {
-                user.Position = Input.Position;
-            }
-
-           /* if (Input.Country != user.Country)
-            {
-                user.Country = Input.Country;
-            }
-
-            if (Input.Province != user.Province)
-            {
-                user.Province = Input.Province;
-            }
-
-            if (Input.Address != user.Address)
-            {
-                user.Address = Input.Address;
-            }
-
-            if (Input.Postcode != user.Postcode)
-            {
-                user.Postcode = Input.Postcode;
-            }
-
-            if (Input.University != user.University)
-            {
-                user.University = Input.University;
-            }*/
-
-            await _userManager.UpdateAsync(user);
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
-
     }
 }

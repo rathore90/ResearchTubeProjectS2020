@@ -20,6 +20,8 @@ using Microsoft.Extensions.Logging;
 using ResearchTube.Areas.Identity.Data;
 using ResearchTube.Data;
 using ResearchTube.Models;
+
+
 namespace ResearchTube.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
@@ -126,12 +128,16 @@ namespace ResearchTube.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                //var Stripe;
+
                 Payment paymentUser = new Payment
                 {
                     UserId = user.Id,
                     PlanType = "free",
+                   // StripeUserId = options.Id,
                 };
 
+                
                 _db_context.Payments.Add(paymentUser);
                 _db_context.SaveChanges();
 

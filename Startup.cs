@@ -13,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResearchTube.Areas.Identity.Data;
-using Stripe;
 using Microsoft.Extensions.Options;
 
 namespace ResearchTube

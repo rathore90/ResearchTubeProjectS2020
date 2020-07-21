@@ -16,6 +16,7 @@ namespace ResearchTube.Data
         public DbSet<Payment> Payment { get; set; }
 
         public DbSet<Video> Video { get; set; }
+        public DbSet<UserVideos> UserVideos { get; set; }
         public ResearchTubeDbContext(DbContextOptions<ResearchTubeDbContext> options)
             : base(options)
         {
@@ -23,10 +24,21 @@ namespace ResearchTube.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //set composite key in the middle table
+            builder.Entity<UserVideos>().HasKey(uv => new { uv.AspNetUsersId, uv.VideoId});
+            
+            builder.Entity<UserVideos>().
+                HasOne(uv => uv.ResearchTubeUser).WithMany(uv => uv.UserVideos).HasForeignKey(u => u.AspNetUsersId);
+
+            builder.Entity<UserVideos>().
+                HasOne(uv => uv.Video).WithMany(uv => uv.UserVideos).HasForeignKey(u => u.VideoId);
+
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+  
         }
     }
 }

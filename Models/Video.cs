@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ResearchTube.Areas.Identity.Data;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,10 +9,7 @@ namespace ResearchTube.Models
     public class Video
     {
         [Key]
-        public int VideoId { get; set; }
-
-        [Required]
-        public string UserId { get; set; }
+        public string VideoId { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         public string Title { get; set; }
@@ -28,5 +27,7 @@ namespace ResearchTube.Models
         [Column(TypeName = "nvarchar(max)")]
         public string Description { get; set; }
         public Category VideoCategory { get; set; }
+
+        public List<UserVideos> UserVideos {get; set;}
     }
 }

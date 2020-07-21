@@ -10,8 +10,8 @@ using ResearchTube.Data;
 namespace ResearchTube.Migrations
 {
     [DbContext(typeof(ResearchTubeDbContext))]
-    [Migration("20200717014406_NewMigration")]
-    partial class NewMigration
+    [Migration("20200720155527_FixRelationship")]
+    partial class FixRelationship
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -279,12 +279,25 @@ namespace ResearchTube.Migrations
                     b.ToTable("Payment");
                 });
 
+            modelBuilder.Entity("ResearchTube.Models.UserVideos", b =>
+                {
+                    b.Property<string>("AspNetUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AspNetUsersId", "VideoId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("UserVideos");
+                });
+
             modelBuilder.Entity("ResearchTube.Models.Video", b =>
                 {
-                    b.Property<int>("VideoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(100)");
@@ -300,10 +313,6 @@ namespace ResearchTube.Migrations
 
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("date");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("VideoCategoryCategoryId")
                         .HasColumnType("int");
@@ -387,6 +396,21 @@ namespace ResearchTube.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.UserVideos", b =>
+                {
+                    b.HasOne("ResearchTube.Areas.Identity.Data.ResearchTubeUser", "ResearchTubeUser")
+                        .WithMany("UserVideos")
+                        .HasForeignKey("AspNetUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ResearchTube.Models.Video", "Video")
+                        .WithMany("UserVideos")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

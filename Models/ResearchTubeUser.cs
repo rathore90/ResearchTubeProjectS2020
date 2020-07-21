@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using ResearchTube.Models;
 
 namespace ResearchTube.Areas.Identity.Data
 {
@@ -31,5 +32,7 @@ namespace ResearchTube.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Interest { get; set; }
+
+        public List<UserVideos> UserVideos { get; set; }
     }
 }

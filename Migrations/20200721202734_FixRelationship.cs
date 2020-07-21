@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ResearchTube.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class FixRelationship : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,26 +63,6 @@ namespace ResearchTube.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payment",
-                columns: table => new
-                {
-                    PaymentId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
-                    PlanType = table.Column<string>(nullable: true),
-                    StripeUserId = table.Column<string>(nullable: true),
-                    PaymentMethodId = table.Column<string>(nullable: true),
-                    subscriptionId = table.Column<string>(nullable: true),
-                    current_period_start = table.Column<DateTime>(nullable: true),
-                    current_period_end = table.Column<DateTime>(nullable: true),
-                    Last4 = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,6 +197,51 @@ namespace ResearchTube.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    PaymentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlanTypePaymentTypeId = table.Column<string>(nullable: true),
+                    ResearchTubeUserId = table.Column<string>(nullable: true),
+                    StripeUserId = table.Column<string>(nullable: true),
+                    PaymentMethodId = table.Column<string>(nullable: true),
+                    SubscriptionId = table.Column<string>(nullable: true),
+                    CurrenPeriodStart = table.Column<DateTime>(nullable: true),
+                    CurrentPeriodEnd = table.Column<DateTime>(nullable: true),
+                    Last4 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
+                    table.ForeignKey(
+                        name: "FK_Payment_AspNetUsers_ResearchTubeUserId",
+                        column: x => x.ResearchTubeUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentType",
+                columns: table => new
+                {
+                    PaymentTypeId = table.Column<string>(nullable: false),
+                    AccessLevel = table.Column<string>(nullable: true),
+                    CurrentPaymentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentType", x => x.PaymentTypeId);
+                    table.ForeignKey(
+                        name: "FK_PaymentType_Payment_CurrentPaymentId",
+                        column: x => x.CurrentPaymentId,
+                        principalTable: "Payment",
+                        principalColumn: "PaymentId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -257,13 +282,46 @@ namespace ResearchTube.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payment_PlanTypePaymentTypeId",
+                table: "Payment",
+                column: "PlanTypePaymentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_ResearchTubeUserId",
+                table: "Payment",
+                column: "ResearchTubeUserId",
+                unique: true,
+                filter: "[ResearchTubeUserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentType_CurrentPaymentId",
+                table: "PaymentType",
+                column: "CurrentPaymentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Video_VideoCategoryCategoryId",
                 table: "Video",
                 column: "VideoCategoryCategoryId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Payment_PaymentType_PlanTypePaymentTypeId",
+                table: "Payment",
+                column: "PlanTypePaymentTypeId",
+                principalTable: "PaymentType",
+                principalColumn: "PaymentTypeId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Payment_AspNetUsers_ResearchTubeUserId",
+                table: "Payment");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Payment_PaymentType_PlanTypePaymentTypeId",
+                table: "Payment");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -280,19 +338,22 @@ namespace ResearchTube.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Payment");
-
-            migrationBuilder.DropTable(
                 name: "Video");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "PaymentType");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
         }
     }
 }

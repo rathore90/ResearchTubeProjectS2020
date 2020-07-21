@@ -44,7 +44,12 @@ namespace ResearchTube
                         options.AppSecret = "af18667feac5ffb21741b75e699b30fe";
                     });
 
-
+            services.AddDefaultIdentity<ResearchTubeUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+                .AddEntityFrameworkStores<ResearchTubeDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

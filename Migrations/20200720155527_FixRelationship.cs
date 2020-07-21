@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ResearchTube.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class FixRelationship : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,7 +72,9 @@ namespace ResearchTube.Migrations
                     PaymentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
-                    PlanType = table.Column<string>(nullable: true),
+                    
+                    
+                    Type = table.Column<string>(nullable: true),
                     StripeUserId = table.Column<string>(nullable: true),
                     PaymentMethodId = table.Column<string>(nullable: true),
                     subscriptionId = table.Column<string>(nullable: true),
@@ -195,9 +197,7 @@ namespace ResearchTube.Migrations
                 name: "Video",
                 columns: table => new
                 {
-                    VideoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
+                    VideoId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     UploadDate = table.Column<DateTime>(type: "date", nullable: false),
@@ -215,6 +215,30 @@ namespace ResearchTube.Migrations
                         principalTable: "Category",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserVideos",
+                columns: table => new
+                {
+                    AspNetUsersId = table.Column<string>(nullable: false),
+                    VideoId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserVideos", x => new { x.AspNetUsersId, x.VideoId });
+                    table.ForeignKey(
+                        name: "FK_UserVideos_AspNetUsers_AspNetUsersId",
+                        column: x => x.AspNetUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserVideos_Video_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Video",
+                        principalColumn: "VideoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -257,6 +281,11 @@ namespace ResearchTube.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserVideos_VideoId",
+                table: "UserVideos",
+                column: "VideoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Video_VideoCategoryCategoryId",
                 table: "Video",
                 column: "VideoCategoryCategoryId");
@@ -283,13 +312,16 @@ namespace ResearchTube.Migrations
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Video");
+                name: "UserVideos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Video");
 
             migrationBuilder.DropTable(
                 name: "Category");

@@ -10,8 +10,8 @@ using ResearchTube.Data;
 namespace ResearchTube.Migrations
 {
     [DbContext(typeof(ResearchTubeDbContext))]
-    [Migration("20200717014406_NewMigration")]
-    partial class NewMigration
+    [Migration("20200721202734_FixRelationship")]
+    partial class FixRelationship
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -249,34 +249,57 @@ namespace ResearchTube.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime?>("CurrenPeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CurrentPeriodEnd")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("Last4")
                         .HasColumnType("int");
 
                     b.Property<string>("PaymentMethodId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlanType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PlanTypePaymentTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ResearchTubeUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StripeUserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("current_period_end")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("current_period_start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("subscriptionId")
+                    b.Property<string>("SubscriptionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 
+                    b.HasIndex("PlanTypePaymentTypeId");
+
+                    b.HasIndex("ResearchTubeUserId")
+                        .IsUnique()
+                        .HasFilter("[ResearchTubeUserId] IS NOT NULL");
+
                     b.ToTable("Payment");
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.PaymentType", b =>
+                {
+                    b.Property<string>("PaymentTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccessLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrentPaymentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentTypeId");
+
+                    b.HasIndex("CurrentPaymentId");
+
+                    b.ToTable("PaymentType");
                 });
 
             modelBuilder.Entity("ResearchTube.Models.Video", b =>
@@ -387,6 +410,26 @@ namespace ResearchTube.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.Payment", b =>
+                {
+                    b.HasOne("ResearchTube.Models.PaymentType", "PlanType")
+                        .WithMany()
+                        .HasForeignKey("PlanTypePaymentTypeId");
+
+                    b.HasOne("ResearchTube.Areas.Identity.Data.ResearchTubeUser", "Users")
+                        .WithOne("Payment")
+                        .HasForeignKey("ResearchTube.Models.Payment", "ResearchTubeUserId");
+                });
+
+            modelBuilder.Entity("ResearchTube.Models.PaymentType", b =>
+                {
+                    b.HasOne("ResearchTube.Models.Payment", "Payment")
+                        .WithMany("PaymentTypes")
+                        .HasForeignKey("CurrentPaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

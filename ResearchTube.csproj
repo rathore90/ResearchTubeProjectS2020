@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ResearchTube.Test\**" />
+    <Content Remove="ResearchTube.Test\**" />
+    <EmbeddedResource Remove="ResearchTube.Test\**" />
+    <None Remove="ResearchTube.Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.0.1" />
     <PackageReference Include="Google.Apis" Version="1.48.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.48.0" />

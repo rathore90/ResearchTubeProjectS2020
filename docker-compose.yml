@@ -1,24 +1,31 @@
 version: "3.7"
+
+networks: 
+    localdev:
+        name: localdev
 services:
     web:
         build:
             dockerfile: Dockerfile
             context: .
+        restart: always
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
         ports:
             - '8080:80'
-        extra_hosts:
-            - 'localhost:192.168.65.2'
         depends_on:
             - db
+        networks:
+            - localdev
     db:        
-        container_name: resarchTube-server-db
         image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
             - "1433:1433"
         volumes:
             - 'C:\DockerVolumes:/var/opt/mssql/data'    
         environment: 
-            SA_PASSWORD: "researchTube123!"
-            ACCEPT_EULA: "Y"
+            MSSQL_SA_PASSWORD: "researchTube123!"
+            ACCEPT_EULA: Y
+            MSSQL_TCP_PORT: 1433
+        networks:
+            - localdev
